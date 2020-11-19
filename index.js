@@ -132,7 +132,7 @@ const people = [
       github: "Obaida-Albaroudi"
     },
     {
-      email: "patrick@repl.it",
+      email: "patrickscoleman@gmail.com",
       slack: "U012KPQKZST",
       github: "patrickscoleman"
     }
