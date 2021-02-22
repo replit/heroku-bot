@@ -22,21 +22,6 @@ const people = [
         github: "moudy"
     },
     {
-        email: "parvathi@repl.it",
-        slack: "U012503NQJU",
-        github: ""
-    },
-    {
-        email: "alan@repl.it",
-        slack: "U010Z00ULUC",
-        github: "ALANVF"
-    },
-    {
-        email: "theangryepicbanana@gmail.com",
-        slack: "U010Z00ULUC",
-        github: "ALANVF"
-    },
-    {
         email: "wade@repl.it",
         slack: "UV9TEDFSP",
         github: "AllAwesome497"
@@ -62,12 +47,12 @@ const people = [
         github: "dan-stowell"
     },
     {
-        email: "emily@repl.it",
-        slack: "U010A6L6TKL",
+        email: "faris@repl.it",
+        slack: "U80CXJQDC",
         github: ""
     },
     {
-        email: "faris@repl.it",
+        email: "faris+oceanside@repl.it",
         slack: "U80CXJQDC",
         github: ""
     },
@@ -112,12 +97,7 @@ const people = [
         github: "cbrewster"
     },
     {
-      email: "david@repl.it",
-      slack: "U01A02GA6US",
-      github: "david-cako"
-    },
-    {
-      email: "lhchavez@lhchavez.com",
+      email: "luis@repl.it",
       slack: "U01BR4ERE9Y",
       github: "lhchavez"
     },
@@ -135,6 +115,16 @@ const people = [
       email: "patrickscoleman@gmail.com",
       slack: "U012KPQKZST",
       github: "patrickscoleman"
+    },
+    {
+      email: "alisa@repl.it",
+      slack: "U01J7EUK4TZ",
+      github: "chanalisa"
+    },
+    {
+      email: "tiga@repl.it",
+      slack: "U01EF7760SE",
+      github: "slmjkdbtl"
     }
 ];
 const token = process.env.HEROKU_TOKEN;
@@ -172,8 +162,9 @@ function findLatest(releases, includeFailed = false) {
 
     top: while (true) {
         if (latest.description.match(/rollback/i)) {
-            const version = latest.description.split(/\s/)[2];
+            const version = latest.description.split('Rollback to ')[1];
             const num = parseInt(version.slice(1));
+
             for (const rel of releases) {
                 if (rel.version === num) {
                     latest = rel;
@@ -231,13 +222,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/staging_deploy", async (req, res) => {
-    console.log("got a deploy on staging", req.body);
+  console.log("got a deploy on staging", req.body);
 
-    // app, user, url, head, head_long, git_log and release
+  // app, user, url, head, head_long, git_log and release
 
-    res.end("gotcha");
+  res.end("gotcha");
 
-    return;
+  return;
 });
 
 app.post("*", async (req, res) => {
@@ -306,6 +297,7 @@ async function checkUndeployed() {
     await db.set(staging.commit, false);
 
     const prod = await getLatestRelease(process.env.APP);
+
 
     if (prod.commit === staging.commit) return;
 
